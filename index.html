@@ -5,44 +5,13 @@
 	<title>Cubes The Game</title>
 	<link rel="shortcut icon" href="">
 	<link rel="stylesheet" href="css/styles.css">
-	<!--Grids test  -->
-	<style>
-		
-		/*works for columns*/
-		.columns-wrapper{
-			background-color: #eee;;
-			display: grid;
-			grid-template-columns: 5fr 1fr
-		}
-
-
-		.columns-wrapper > div:nth-child(odd) {
-			background-color: #ddd;
-		} 
-
-		/*works for rows*/
-		.rows-wrapper{
-			display: grid;
-			grid-template-rows:repeat(2,1fr);
-		}
-
-		.rows-wrapper-fullscreen{
-			grid-template-rows: 25vh 75vh;
-		}
-		/*tools panel*/
-		.tools{
-			display: grid;
-			grid-template-columns:repeat(4,1fr);
-		}
-
-	</style>
 </head>
 <body>
 	<div class="rows-wrapper rows-wrapper-fullscreen">
 		<div class="columns-wrapper">
 			<div class="rows-wrapper">
 				<div class="title"><b>Cubes the Game</b></div>
-				<div class="tools">
+				<div class="columns-wrapper-4-rows">
 					<div class="btn">Button </div>
 					<div class="btn">Button </div>
 					<div class="displayer">Display </div>

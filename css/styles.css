@@ -1,0 +1,42 @@
+/**
+*	Main markup
+*/
+
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+
+/**
+*	Main markup
+*/
+
+.columns-wrapper{
+	background-color: #eee;;
+	display: grid;
+	grid-template-columns: 5fr 1fr
+}
+
+/*Temporary class to display difference*/
+.columns-wrapper > div:nth-child(odd) {
+	background-color: #ddd;
+} 
+
+.rows-wrapper{
+	display: grid;
+	grid-template-rows:repeat(2,1fr);
+}
+
+.rows-wrapper-fullscreen{
+	grid-template-rows: 25vh 75vh;
+}
+
+.tools{
+	display: grid;
+	grid-template-columns:repeat(4,1fr);
+}

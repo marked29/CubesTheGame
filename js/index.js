@@ -1,5 +1,6 @@
 const startBtn = document.getElementById("Start")
 const newGameBtn = document.getElementById("NewGame")
+const saveBtn = document.getElementById("Save")
 
 const points = document.getElementById("Points")
 const counter = points.querySelector(".counter")
@@ -7,6 +8,8 @@ const counter = points.querySelector(".counter")
 const clock = document.getElementById("Timer");
 const minutesSpan = clock.querySelector(".minutes");
 const secondsSpan = clock.querySelector(".seconds");
+
+const overlay = document.getElementById("Overlay")
 
 
 let timeinterval;
@@ -32,6 +35,11 @@ const reset = function() {
 }
 
 
+
+/**
+*   Timer
+*/
+
 function getTimeRemaining(endtime) {
   var t = Date.parse(endtime) - Date.parse(new Date());
   var seconds = Math.floor((t / 1000) % 60);
@@ -42,11 +50,7 @@ function getTimeRemaining(endtime) {
   };
 }
 
-
-
-const initializeClock = (id, endtime) => {
-
-
+const initializeClock = (endtime) => {
   const updateClock = () => {
     var t = getTimeRemaining(endtime);
     minutesSpan.innerHTML = ("0" + t.minutes).slice(-2);
@@ -58,11 +62,27 @@ const initializeClock = (id, endtime) => {
 }
 
 
+/**
+*   TODO: create new form to save the name
+*/ 
+
+const showForm = () => {
+  overlay.style.display = 'grid';
+}
+
+const hideForm = () => {
+  overlay.style.display = 'none';
+}
+
+
+/**
+*   Buttons
+*/
 
 const startGame = () => {
   reset();
   let deadline = new Date(Date.parse(new Date()) + 60 * 1000);
-  initializeClock("Timer", deadline);
+  initializeClock(deadline);
   isStartGamePressed = true;
 }
 
@@ -71,16 +91,19 @@ const newGame = function() {
       alert("Play this one - you won\'t regret it!");
       return;
   }
-
+  showForm();
   reset();
 }
 
-startBtn.addEventListener("click", () => { startGame()});
-newGameBtn.addEventListener("click", () => { newGame()});
+
+
+
 
 
 // TODO: create game logic 
-// TODO: create new form to save the name
-// TODO: implement reset method
+// TODO: side-bar impl
 
 
+startBtn.addEventListener("click", () => { startGame()});
+newGameBtn.addEventListener("click", () => { newGame()});
+saveBtn.addEventListener("click", () => { hideForm()});

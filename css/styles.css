@@ -53,7 +53,7 @@ body{
 	-moz-transform: rotate(-45deg);
 }
 
-#Overlay {
+.overlay {
 	position: fixed;
 	display: none;
 	width: 100%;

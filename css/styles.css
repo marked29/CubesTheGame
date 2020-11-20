@@ -38,7 +38,6 @@ body{
 }
 
 .unrotate{
-  display: inline-block;
   transform: rotate(-45deg); 
   -moz-transform: rotate(-45deg);
 }

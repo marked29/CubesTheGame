@@ -11,21 +11,12 @@ body{
 	box-sizing: border-box;
 }
 
-
-/**
-*	Main markup
-*/
-
 .columns-wrapper{
-	background-color: #eee;;
+	background-color: #d9d9d9;
 	display: grid;
 	grid-template-columns: 5fr 1fr
 }
 
-/*Temporary class to display difference*/
-.columns-wrapper > div:nth-child(odd) {
-	background-color: #ddd;
-} 
 
 .rows-wrapper{
 	display: grid;
@@ -39,4 +30,15 @@ body{
 .columns-wrapper-4-rows{
 	display: grid;
 	grid-template-columns:repeat(4,1fr);
+}
+
+.center {
+  align-self: center;
+  justify-self: center;
+}
+
+.unrotate{
+  display: inline-block;
+  transform: rotate(-45deg); 
+  -moz-transform: rotate(-45deg);
 }

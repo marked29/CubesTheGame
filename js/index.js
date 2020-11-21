@@ -15,6 +15,8 @@ const name = document.getElementById("Name");
 
 const gameField = document.getElementById("GameField");
 
+const playersRanking = document.getElementById("Ranking");
+
 const myStorage = window.localStorage;
 
 
@@ -43,6 +45,7 @@ const reset = function() {
   }
   printDefaults();
 
+  name.value = "";
   score = 0;
   isStartGamePressed = false;
 
@@ -91,8 +94,8 @@ const showForm = () => {
 
 const hideForm = () => {
   overlay.style.display = 'none';
-
-  myStorage.setItem(name.value, finalScore.textContent)
+  myStorage.setItem(name.value, finalScore.textContent);
+  updateList();
 }
 
 
@@ -114,13 +117,8 @@ const newGame = function() {
   }
   showForm();
   
-  // keepValues();
   reset();
 }
-
-
-
-
 
 
 // TODO: create game logic 
@@ -133,6 +131,29 @@ const addScore = () => {
 
 // TODO: side-bar impl
 
+const getAllStorage = () => {
+  let rankingList = [];
+  let keys = Object.keys(localStorage);
+  let key;
+
+  for (let i = 0; key = keys[i]; i++) {
+    rankingList.push(key + ' : ' +localStorage.getItem(key));
+  }
+  return rankingList;
+}
+
+
+const updateList = () => {
+  if (Object.keys(localStorage).length === 0) {
+    return;
+  }
+  
+  let li = document.createElement('li');
+  li.appendChild(document.createTextNode(name.value + " : " + myStorage.getItem(name.value)));
+  playersRanking.appendChild(li);
+}
+
+// createRankingList();
 
 startBtn.addEventListener("click", () => { startGame() });
 newGameBtn.addEventListener("click", () => { newGame() });

@@ -13,11 +13,13 @@ const secondsSpan = clock.querySelector(".seconds");
 const overlay = document.getElementById("Hidden");
 const name = document.getElementById("Name");
 
-const gameField = document.getElementById("GameField");
+const mainField = document.getElementById("GameField");
 
 const playersRanking = document.getElementById("Ranking");
 
 const myStorage = window.localStorage;
+
+const FIELD_SIZE = 5
 
 
 let timeinterval;
@@ -39,7 +41,7 @@ const printScore = (id ,point) => {
 }
 
 
-const reset = function() {
+const reset = () => {
   if (timeinterval) {
     clearInterval(timeinterval);
   }
@@ -108,9 +110,10 @@ const startGame = () => {
   let deadline = new Date(Date.parse(new Date()) + 60 * 1000);
   initializeClock(deadline);
   isStartGamePressed = true;
+  printGameFields();
 }
 
-const newGame = function() {
+const newGame = () => {
   if (score == 0 && isStartGamePressed == false) {
       alert("Play this one - you won\'t regret it!");
       return;
@@ -133,6 +136,88 @@ const addScore = () => {
   printScore(counter,score);
 }
 
+const gameLogic = target => {
+  gameFields[target.id].isActive = false;
+  target.style.visibility = 'hidden';
+  addScore();
+  addNewBlocks();
+}
+
+const addNewBlocks = () => {
+  let randomId = Math.floor(Math.random() * gameFields.length);
+  let randomAmount = Math.random() <= 0.4;
+
+  while (gameFields[randomId].isActive != false){
+    randomId = Math.floor(Math.random() * gameFields.length);
+  }
+
+  gameFields[randomId].isActive = true;
+  document.getElementById(randomId).style.visibility = 'visible';
+}
+
+
+const setRandomColor = () => {
+  let color
+  switch (Math.abs(Math.ceil(Math.random() * 10 - 4))) {
+    case 0:
+        color = "red"; 
+        break;
+      case 1:
+        color = "orange"; 
+        break;
+      case 2:
+        color = "yellow"; 
+        break;
+      case 3:
+        color = "lightgreen"; 
+        break;
+      case 4:
+        color = "cyan"; 
+        break;
+      case 5:
+        color = "blue"; 
+        break;
+      case 6:
+        color = "violet";
+        break;
+      default:
+        alert( "Unexpected error" );
+  }
+  return color;
+}
+
+let gameFields = Array(25).fill().map( gameField=> {
+  return {
+    color : setRandomColor(),
+    isActive: Math.random() <= 0.2
+  }
+});
+
+
+const printGameFields = () => {
+  let ids = 0;
+
+  for (var i = 0; i < FIELD_SIZE; i++) {
+    let wrapper = document.createElement('div');
+    wrapper.className = "center columns-wrapper-5";
+    mainField.appendChild(wrapper);
+
+    for (var j = 0; j < FIELD_SIZE; j++) {
+      let newElement = document.createElement('div');
+      newElement.className = "center neu-center neu-cube";
+      newElement.style.backgroundColor = gameFields[ids].color;
+      newElement.id = ids;
+        
+      if (!gameFields[ids].isActive) {
+          newElement.style.visibility = 'hidden';
+      }
+      wrapper.appendChild(newElement);
+
+      ids++;
+    }
+  }
+
+}
 
 /**
 *   side-bar impl
@@ -178,4 +263,11 @@ printListOfPlayers();
 startBtn.addEventListener("click", () => { startGame() });
 newGameBtn.addEventListener("click", () => { newGame() });
 saveBtn.addEventListener("click", () => { hideForm() });
-gameField.addEventListener("click", () => { addScore() });
+mainField.addEventListener("click", (element) => { 
+    element = element || window.event;
+    if(element.target.className=="center columns-wrapper-5"){
+        return;
+    }
+    gameLogic(element.target); 
+});
+

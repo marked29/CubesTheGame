@@ -44,18 +44,16 @@ const reset = function() {
     clearInterval(timeinterval);
   }
   printDefaults();
-
   name.value = "";
   score = 0;
   isStartGamePressed = false;
 
 }
 
-
-
 /**
 *   Timer
 */
+
 
 function getTimeRemaining(endtime) {
   var t = Date.parse(endtime) - Date.parse(new Date());
@@ -82,26 +80,28 @@ const initializeClock = (endtime) => {
   timeinterval = setInterval(updateClock, 1000);
 }
 
-
 /**
 *   TODO: create new form to save the name
 */ 
 
+
 const showForm = () => {
   overlay.style.display = 'grid';
+
   printScore(finalScore, score)
 }
 
 const hideForm = () => {
   overlay.style.display = 'none';
+  
   myStorage.setItem(name.value, finalScore.textContent);
   updateList();
 }
 
-
 /**
 *   Buttons
 */
+
 
 const startGame = () => {
   reset();
@@ -116,31 +116,27 @@ const newGame = function() {
       return;
   }
   showForm();
-  
+
   reset();
 }
 
+/**
+*   TODO: create game logic 
+*/  
 
-// TODO: create game logic 
 
 const addScore = () => {
+  if (!isStartGamePressed) {
+    return;
+  }
   score++;
   printScore(counter,score);
 }
 
 
-// TODO: side-bar impl
-
-const getAllStorage = () => {
-  let rankingList = [];
-  let keys = Object.keys(localStorage);
-  let key;
-
-  for (let i = 0; key = keys[i]; i++) {
-    rankingList.push(key + ' : ' +localStorage.getItem(key));
-  }
-  return rankingList;
-}
+/**
+*   side-bar impl
+*/
 
 
 const updateList = () => {
@@ -153,7 +149,31 @@ const updateList = () => {
   playersRanking.appendChild(li);
 }
 
-// createRankingList();
+const getAllStorage = () => {
+  let rankingList = [];
+  let keys = Object.keys(localStorage);
+  let key;
+
+  for (let i = 0; key = keys[i]; i++) {
+    rankingList.push(key + ' : ' +localStorage.getItem(key));
+  }
+  return rankingList;
+}
+
+const printListOfPlayers = () => {
+  let rankingList = getAllStorage();
+  let keys = Object.keys(localStorage);
+  let key;
+  
+  for (let i = 0; key = keys[i]; i++) {
+    let li = document.createElement('li');
+    li.appendChild(document.createTextNode( rankingList[i]));
+    playersRanking.appendChild(li);
+  }
+
+}
+
+printListOfPlayers();
 
 startBtn.addEventListener("click", () => { startGame() });
 newGameBtn.addEventListener("click", () => { newGame() });

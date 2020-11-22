@@ -32,6 +32,11 @@ ul{
 	grid-template-columns:repeat(4,1fr);
 }
 
+.columns-wrapper-5{
+	display: grid;
+	grid-template-columns:repeat(5,1fr);
+}
+
 .rows-wrapper{
 	display: grid;
 	grid-template-rows:repeat(2,1fr);
@@ -40,6 +45,11 @@ ul{
 .rows-wrapper-3{
 	display: grid;
 	grid-template-rows:repeat(3,1fr);
+}
+
+.rows-wrapper-5{
+	display: grid;
+	grid-template-rows:repeat(5,1fr);
 }
 
 .rows-wrapper-fullscreen{

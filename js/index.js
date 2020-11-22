@@ -57,7 +57,7 @@ const reset = () => {
 */
 
 
-function getTimeRemaining(endtime) {
+const getTimeRemaining = endtime => {
   var t = Date.parse(endtime) - Date.parse(new Date());
   var seconds = Math.floor((t / 1000) % 60);
   var minutes = Math.floor((t / 1000 / 60) % 60);
@@ -95,7 +95,7 @@ const showForm = () => {
 
 const hideForm = () => {
   overlay.style.display = 'none';
-  
+
   myStorage.setItem(name.value, finalScore.textContent);
   updateList();
 }
@@ -110,13 +110,13 @@ const startGame = () => {
   let deadline = new Date(Date.parse(new Date()) + 60 * 1000);
   initializeClock(deadline);
   isStartGamePressed = true;
-  printGameFields();
+  updateGameFields()
 }
 
 const newGame = () => {
   if (score == 0 && isStartGamePressed == false) {
-      alert("Play this one - you won\'t regret it!");
-      return;
+    alert("Play this one - you won\'t regret it!");
+    return;
   }
   showForm();
 
@@ -160,28 +160,28 @@ const setRandomColor = () => {
   let color
   switch (Math.abs(Math.ceil(Math.random() * 10 - 4))) {
     case 0:
-        color = "red"; 
-        break;
-      case 1:
-        color = "orange"; 
-        break;
-      case 2:
-        color = "yellow"; 
-        break;
-      case 3:
-        color = "lightgreen"; 
-        break;
-      case 4:
-        color = "cyan"; 
-        break;
-      case 5:
-        color = "blue"; 
-        break;
-      case 6:
-        color = "violet";
-        break;
-      default:
-        alert( "Unexpected error" );
+    color = "red"; 
+    break;
+    case 1:
+    color = "orange"; 
+    break;
+    case 2:
+    color = "yellow"; 
+    break;
+    case 3:
+    color = "lightgreen"; 
+    break;
+    case 4:
+    color = "cyan"; 
+    break;
+    case 5:
+    color = "blue"; 
+    break;
+    case 6:
+    color = "violet";
+    break;
+    default:
+    alert( "Unexpected error" );
   }
   return color;
 }
@@ -189,13 +189,19 @@ const setRandomColor = () => {
 let gameFields = Array(25).fill().map( gameField=> {
   return {
     color : setRandomColor(),
-    isActive: Math.random() <= 0.2
+    isActive: Math.random() <= 0.1
   }
 });
+
+const availableGameFields = (gameField) => { gameField.isActive == true ;}
 
 
 const printGameFields = () => {
   let ids = 0;
+
+  if (!gameFields.some(availableGameFields)) {
+      gameFields[Math.floor(Math.random() * gameFields.length)].isActive = true;   
+  }
 
   for (var i = 0; i < FIELD_SIZE; i++) {
     let wrapper = document.createElement('div');
@@ -207,17 +213,23 @@ const printGameFields = () => {
       newElement.className = "center neu-center neu-cube";
       newElement.style.backgroundColor = gameFields[ids].color;
       newElement.id = ids;
-        
-      if (!gameFields[ids].isActive) {
-          newElement.style.visibility = 'hidden';
-      }
       wrapper.appendChild(newElement);
-
       ids++;
     }
   }
-
 }
+
+const updateGameFields = () => {
+
+  for (var i = 0; i < gameFields.length; i++) {
+    if (!gameFields[i].isActive) {
+        document.getElementById(i).style.visibility = 'hidden';
+    }
+  }
+}
+
+
+printGameFields();
 
 /**
 *   side-bar impl
@@ -228,7 +240,7 @@ const updateList = () => {
   if (Object.keys(localStorage).length === 0) {
     return;
   }
-  
+
   let li = document.createElement('li');
   li.appendChild(document.createTextNode(name.value + " : " + myStorage.getItem(name.value)));
   playersRanking.appendChild(li);
@@ -249,7 +261,7 @@ const printListOfPlayers = () => {
   let rankingList = getAllStorage();
   let keys = Object.keys(localStorage);
   let key;
-  
+
   for (let i = 0; key = keys[i]; i++) {
     let li = document.createElement('li');
     li.appendChild(document.createTextNode( rankingList[i]));
@@ -264,10 +276,15 @@ startBtn.addEventListener("click", () => { startGame() });
 newGameBtn.addEventListener("click", () => { newGame() });
 saveBtn.addEventListener("click", () => { hideForm() });
 mainField.addEventListener("click", (element) => { 
-    element = element || window.event;
-    if(element.target.className=="center columns-wrapper-5"){
-        return;
-    }
-    gameLogic(element.target); 
+  element = element || window.event;
+  if(element.target.className=="center columns-wrapper-5"){
+    return;
+  }
+  gameLogic(element.target); 
 });
 
+
+
+//TODO: CREATE ENDGAME
+//REFACTOR JS
+// ADD STYLES

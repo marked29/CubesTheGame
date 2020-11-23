@@ -8,9 +8,10 @@
 }
 
 body{
-	overflow-x: hidden;
+	overflow: hidden;
 	box-sizing: border-box;
-	background-color: #d9d9d9;
+	background-color: #eee;
+	font-family: monospace;
 }
 
 button{
@@ -36,9 +37,9 @@ ul{
 	grid-template-columns:repeat(4,1fr);
 }
 
-.columns-wrapper-5{
+.columns-wrapper-11{
 	display: grid;
-	grid-template-columns:repeat(5,1fr);
+	grid-template-columns:repeat(11,1fr);
 }
 
 .rows-wrapper{
@@ -64,6 +65,7 @@ ul{
 .center {
 	align-self: center;
 	justify-self: center;
+	grid-gap: 10px;
 }
 
 .unrotate{
@@ -80,3 +82,17 @@ ul{
 	z-index: 2;
 	cursor: pointer;
 }
+
+.title {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.outline {
+	margin: 10px;;
+  	align-items: center;
+  	display: flex;
+  	justify-content: center;
+}
+

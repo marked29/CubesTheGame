@@ -23,8 +23,12 @@ const playersRanking = document.getElementById("Ranking");
 
 const myStorage = window.localStorage;
 
-const _FIELD_SIZE = 5;
+const _FIELD_ROWS = 5;
+const _FIELD_COLS = 11;
+const _FIELD_COLS_CLASS = "columns-wrapper-11";
+
 const _SECONDS_TIME = 60;
+const _ARRAY_SIZE = _FIELD_ROWS * _FIELD_COLS;
 
 let _timeInterval;
 let _score = 0;
@@ -62,14 +66,19 @@ const resetTimer = () => {
   }
 }
 
-const resetEventListeners = () => {
-  saveBtn.removeEventListener("click", () => { hideForm() });
-  mainField.removeEventListener("click", (element) => { 
+const detectElementId = element => {
     element = element || window.event;
-    if(element.target.className=="center columns-wrapper-5"){
+    let illegalClassName = "center " + _FIELD_COLS_CLASS;
+    if(element.target.className==illegalClassName){
       return;
     }
     gameLogic(element.target); 
+}
+
+const resetEventListeners = () => {
+  saveBtn.removeEventListener("click", () => { hideForm() });
+  mainField.removeEventListener("click", (element) => { 
+    detectElementId(element);
   });
 }
 
@@ -140,11 +149,7 @@ const startGame = () => {
   _isStartGamePressed = true;
   updateGameFields()
   mainField.addEventListener("click", (element) => { 
-    element = element || window.event;
-    if(element.target.className=="center columns-wrapper-5"){
-      return;
-    }
-    gameLogic(element.target); 
+    detectElementId(element);
   });
 
 }
@@ -195,25 +200,25 @@ const setRandomColor = () => {
   let color
   switch (Math.abs(Math.ceil(Math.random() * 10 - 4))) {
     case 0:
-    color = "red"; 
+    color = "#FFAEAD"; 
     break;
     case 1:
-    color = "orange"; 
+    color = "#FFD5C5"; 
     break;
     case 2:
-    color = "yellow"; 
+    color = "#FFFEE0"; 
     break;
     case 3:
-    color = "lightgreen"; 
+    color = "#BBF4FF"; 
     break;
     case 4:
-    color = "cyan"; 
+    color = "#A2DDFF"; 
     break;
     case 5:
-    color = "blue"; 
+    color = "#D9D1FF"; 
     break;
     case 6:
-    color = "violet";
+    color = "#DCEDC1";
     break;
     default:
     alert( "Unexpected error" );
@@ -221,7 +226,7 @@ const setRandomColor = () => {
   return color;
 }
 
-let _gameFields = Array(25).fill().map( gameField=> {
+let _gameFields = Array(_ARRAY_SIZE).fill().map( gameField=> {
   return {
     color : setRandomColor(),
     isActive: Math.random() <= 0.1
@@ -237,12 +242,12 @@ const printGameFields = () => {
       _gameFields[Math.floor(Math.random() * _gameFields.length)].isActive = true;   
   }
 
-  for (var i = 0; i < _FIELD_SIZE; i++) {
+  for (var i = 0; i < _FIELD_ROWS; i++) {
     let wrapper = document.createElement('div');
-    wrapper.className = "center columns-wrapper-5";
+    wrapper.className = "center " + _FIELD_COLS_CLASS;
     mainField.appendChild(wrapper);
 
-    for (var j = 0; j < _FIELD_SIZE; j++) {
+    for (var j = 0; j < _FIELD_COLS; j++) {
       let newElement = document.createElement('div');
       newElement.className = "center neu-center neu-cube";
       newElement.id = ids;

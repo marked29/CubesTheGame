@@ -18,8 +18,31 @@ button{
 	border: none;
 }
 
+button:focus {
+    outline: none;
+}
+
 ul{
 	list-style-type: none;
+}
+
+input {
+	background-color: #eee;
+	border-radius: 10px;
+	width: 200px;
+	height: 20px;
+    cursor: text;
+    border:none;
+  	box-shadow:inset -3px -3px 9px #ffffff83,inset 3px 3px 7px rgba(94,104,121,0.688);
+  	padding: 10px;
+}
+
+input:focus {
+    outline:  none;
+}
+
+input:focus {
+    outline-offset: none;
 }
 
 .columns-wrapper{
@@ -78,7 +101,7 @@ ul{
 	display: none;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.9);
 	z-index: 2;
 	cursor: pointer;
 }
@@ -89,10 +112,14 @@ ul{
   justify-content: center;
 }
 
-.outline {
-	margin: 10px;;
-  	align-items: center;
-  	display: flex;
-  	justify-content: center;
+.form{ 
+	background-color: #eee; 
+	border-radius: 20px;
+	padding:30px;
+	background: linear-gradient(145deg, #eee, #e6e6e6);
 }
 
+.form-elements {
+	width: 200px;
+	height: 100px;
+}

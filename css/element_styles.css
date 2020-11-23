@@ -36,9 +36,9 @@
 */
 
 .neu-display{
+  transform: rotate(45deg);
   height: 100px;
   width: 100px;
-  transform: rotate(45deg);
   border-radius: 20px;
   background: linear-gradient(145deg, #e6e6e6, #eee);
   box-shadow:  5px 5px 15px #d9d9d9, 
